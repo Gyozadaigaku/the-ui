@@ -1,8 +1,16 @@
 import type { NextPage } from "next";
-import Head from "next/head";
-import Image from "next/image";
+import { trpc } from "../utils/trpc";
 
 const Home: NextPage = () => {
+  const hello = trpc.hello.useQuery({ text: "client" });
+  if (!hello.data) {
+    return <div>Loading...</div>;
+  }
+  return (
+    <div>
+      <p>{hello.data.greeting}</p>
+    </div>
+  );
   return (
     <div className="h-screen w-screen flex flex-col justify-center items-center">
       <div className="text-2xl text-center">Which Pokémon is Rounder?</div>

@@ -1,9 +1,10 @@
 import "tailwindcss/tailwind.css";
-import "../styles/global.css";
-import type { AppProps } from "next/app";
+import "@/styles/global.css";
+import type { AppType } from "next/app";
+import { trpc } from "@/utils/trpc";
 
-function MyApp({ Component, pageProps }: AppProps) {
+const MyApp: AppType = ({ Component, pageProps }) => {
   return <Component {...pageProps} />;
-}
+};
 
-export default MyApp;
+export default trpc.withTRPC(MyApp);
