@@ -1,7 +1,5 @@
 import { z } from "zod";
 import { procedure, router } from "@/server/trpc";
-
-import { PokemonClient } from "pokenode-ts";
 import { prisma } from "@/server/utils/prisma";
 
 export const appRouter = router({
@@ -12,10 +10,12 @@ export const appRouter = router({
       })
     )
     .query(async ({ input }) => {
-      const api = new PokemonClient();
+      const pokemon = await prisma.pokemon.findFirst({
+        where: { id: input.id },
+      });
 
-      const pokemon = await api.getPokemonById(input.id);
-      return { name: pokemon.name, sprites: pokemon.sprites };
+      if (!pokemon) throw new Error("lol doesn't exist");
+      return pokemon;
     }),
   "cast-vote": procedure
     .input(

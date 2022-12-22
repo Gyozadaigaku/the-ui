@@ -77,7 +77,7 @@ const PokemonListing: React.FC<{
         {props.pokemon.name}
       </div>
       <Image
-        src={props.pokemon.sprites.front_default}
+        src={props.pokemon.spriteUrl}
         className="w-full"
         alt=""
         width={256}
